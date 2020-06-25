@@ -18,8 +18,8 @@ public class JobData {
 
     private static final String DATA_FILE = "resources/job_data.csv";
     private static Boolean isDataLoaded = false;
-
     private static ArrayList<HashMap<String, String>> allJobs;
+   // private static String findByValue;
 
     /**
      * Fetch list of all values from loaded data,
@@ -53,6 +53,21 @@ public class JobData {
 
         return allJobs;
     }
+    //findByValue
+    public static ArrayList<HashMap<String, String>> findByValue(String findValue){
+        //load data,if not already loaded
+        loadData();
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        for(HashMap<String ,String> row : allJobs){
+            for(String value : row.values()){
+                if(value.toLowerCase().contains(findValue.toLowerCase())){
+                    jobs.add(row);
+                }
+            }
+        }
+
+        return jobs;
+    }
 
     /**
      * Returns results of search the jobs data by key/value, using
@@ -76,7 +91,7 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
